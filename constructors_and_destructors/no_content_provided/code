@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+
+class Book {
+public:
+    Book(const std::string& bookTitle, const std::string& bookAuthor, int publicationYear);
+    Book(const std::string& bookTitle, const std::string& bookAuthor);
+    Book(const std::string& bookTitle);
+
+    void printInfo();
+
+    std::string title;
+    std::string author;
+    int year;
+};
+
+// Main constructor
+Book::Book(const std::string& bookTitle, const std::string& bookAuthor, int publicationYear) 
+    : title(bookTitle), author(bookAuthor), year(publicationYear) {}
+
+// Delegating constructors
+Book::Book(const std::string& bookTitle, const std::string& bookAuthor) 
+    : title(bookTitle), author(bookAuthor), year(0) {}
+
+Book::Book(const std::string& bookTitle) 
+    : title(bookTitle), author("Unknown"), year(0) {}
+
+// Method implementation
+void Book::printInfo() {
+    std::cout << "Title: " << title
+              << ", Author: " << author
+              << ", Year: " << year << std::endl;
+}
+
+int main() {
+    Book book1("1984", "George Orwell", 1949);
+    Book book2("Clean Code", "Robert C. Martin");
+    Book book3("Mystery Book");
+
+    book1.printInfo();
+    book2.printInfo();
+    book3.printInfo();
+
+    return 0;
+}
