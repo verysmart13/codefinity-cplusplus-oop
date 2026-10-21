@@ -1,34 +1,49 @@
 #include <iostream>
 
-class Transaction {
+class GradesManager {
 public:
-    Transaction(float amount, float rate);
-    float processTransaction(float feePercent, float targetRate);
+    GradesManager(int size);
+    double calculateAverage();
+    ~GradesManager();
 
-    float amount;
-    float rate;
-    float total;
+private:
+    int* grades;
+    int size;
 };
 
-// Constructor with initializer‐list
-Transaction::Transaction(float amount, float rate)
-    : amount(amount), rate(rate), total(amount * rate)
+// Constructor
+GradesManager::GradesManager(int size)
+    : size(size) 
 {
-    // body left empty
+    grades = new int[size];
+    for(int i = 0; i < size; i++) {
+        grades[i] = i + 1;
+    }
+    std::cout << "Grades initialized." << std::endl;
+}
+    
+// Method
+double GradesManager::calculateAverage() {
+    double sum = 0;
+    for(int i = 0; i < size; i++) {
+        sum += grades[i];
+    }
+    return (sum * 1.0) / size;
 }
 
-float Transaction::processTransaction(float feePercent, float targetRate) {
-    total -= total * (feePercent / 100.0f);
-    total *= targetRate;
-    return total;
+// Destructor
+GradesManager::~GradesManager() {
+    delete[] grades;
+    std::cout << "Grades memory released." << std::endl;
 }
 
 int main() {
-    Transaction t1(100, 1.2f);
-    Transaction t2(50, 0.9f);
+    GradesManager* manager = new GradesManager(5);
 
-    std::cout << t1.processTransaction(5, 0.8f) << std::endl;   // 91.2
-    std::cout << t2.processTransaction(10, 1.1f) << std::endl;  // 44.55
+    double avg = manager->calculateAverage();
+    std::cout << "Average grade: " << avg << std::endl;
+
+    delete manager;
 
     return 0;
 }
